@@ -8,12 +8,13 @@
             <v-layout>
               <v-flex sm4 xs12>
                 <vue-instant
-                  :suggestion-attribute="suggestionAttribute"
+                  suggestion-attribute="title"
                   v-model="value"
                   :show-autocomplete="true"
                   :autofocus="true"
                   :suggestions="suggestions"
                   type="google"
+                  @input="changed"
                 ></vue-instant>
 
               </v-flex>
@@ -68,7 +69,7 @@
 
 <script>
 
-  import { mapGetters } from 'vuex';
+  import { mapActions } from 'vuex';
 
   export default {
     asyncData () {
@@ -82,18 +83,22 @@
       return {
         e3: null,
         item: '',
-        items: ['sika', 'ololo  ']
+        suggestions: []
       }
     },
-    computed: {
-      ...mapGetters({
-        suggest: 'airports/suggest'
-      })
+    mounted() {
+      window.ss = this;
     },
     methods: {
+      changed() {
+        this.suggest = this.suggest(this.value);
+      },
       getLabel (item) {
         return item.name
-      }
+      },
+      ...mapActions({
+        suggest: 'airports/suggest'
+      })
     }
   }
 </script>
