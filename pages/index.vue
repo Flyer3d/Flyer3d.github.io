@@ -7,10 +7,18 @@
 
             <v-layout>
               <v-flex sm4 xs12>
-                <v-autocomplete :items="items" v-model="item" :get-label="getLabel"></v-autocomplete>
+                <vue-instant
+                  :suggestion-attribute="suggestionAttribute"
+                  v-model="value"
+                  :show-autocomplete="true"
+                  :autofocus="true"
+                  :suggestions="suggestions"
+                  type="google"
+                ></vue-instant>
+
               </v-flex>
               <v-flex sm4 xs12>
-                <v-autocomplete :items="items" v-model="item" :get-label="getLabel"></v-autocomplete>
+
               </v-flex>
 
               <v-flex sm4 xs12>
@@ -50,7 +58,7 @@
             <div class="text-xs-center">
               <v-btn success large dark>
                 <v-icon dark left>flight</v-icon>
-                Искать
+                Найти авиабилеты
               </v-btn>
             </div>
           </div>
@@ -79,7 +87,7 @@
     },
     computed: {
       ...mapGetters({
-        ololo: ''
+        suggest: 'airports/suggest'
       })
     },
     methods: {

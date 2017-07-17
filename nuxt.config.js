@@ -2,11 +2,11 @@ const { join } = require('path')
 
 module.exports = {
   build: {
-    vendor: ['vuetify', 'v-autocomplete']
+    vendor: ['vuetify']
   },
   plugins: [
     '~plugins/vuetify.js',
-    '~plugins/v-autocomplete.js',
+    '~plugins/vue-instant.js',
   ],
   css: [
     { src: join(__dirname, 'css/app.styl'), lang: 'styl' }
