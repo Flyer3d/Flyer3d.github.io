@@ -2,7 +2,7 @@ const { join } = require('path')
 
 module.exports = {
   build: {
-    vendor: ['vuetify']
+    vendor: ['vuetify', 'flatpickr']
   },
   plugins: [
     '~plugins/vuetify.js',

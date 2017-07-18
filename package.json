@@ -7,11 +7,16 @@
   "dependencies": {
     "add": "^2.0.6",
     "axios": "^0.16.2",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.7.0",
+    "flatpickr": "^3.0.6",
+    "moment": "^2.18.1",
     "nuxt": "latest",
     "vue": "2.3.4",
     "vue-instant": "^1.0.0",
     "vue-server-renderer": "2.3.4",
     "vue-template-compiler": "2.3.4",
+    "vue2-autocomplete-js": "^0.0.4",
     "vuetify": "^0.14.1",
     "yarn": "^0.27.5"
   },
