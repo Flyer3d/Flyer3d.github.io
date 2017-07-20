@@ -43,21 +43,21 @@
 
 <script>
 
-  import {mapGetters, mapActions} from 'vuex'
+  import { mapGetters, mapActions } from 'vuex';
 
   export default {
     props: ['value', 'placeholder'],
-    data () {
+    data() {
       return {
         val: {
           airport: null,
           display: this.value && this.value.title
         },
         selected: null
-      }
+      };
     },
-    mounted () {
-      this.suggest(this.val.display)
+    mounted() {
+      this.suggest(this.val.display);
     },
     computed: {
       ...mapGetters({
@@ -69,7 +69,7 @@
       'val.display': function () {
         if (document.activeElement === this.$refs.control.$refs.input) {
           this.suggest(this.val.display);
-          this.$refs.menu.activate()
+          this.$refs.menu.activate();
         }
       }
     },
@@ -77,26 +77,26 @@
       ...mapActions({
         suggest: 'airports/suggest'
       }),
-      clear () {
+      clear() {
         this.val = {
           airport: null,
           display: ''
-        }
+        };
 
-        this.$refs.control.$refs.input.focus()
+        this.$refs.control.$refs.input.focus();
       },
       select(item) {
-        this.val.airport = item
-        this.val.display = item.title
+        this.val.airport = item;
+        this.val.display = item.title;
 
         this.$emit('input', item);
-        this.$refs.control.$refs.input.blur()
+        this.$refs.control.$refs.input.blur();
 
         this.$emit('done');
-        this.$refs.menu.deactivate()
+        this.$refs.menu.deactivate();
       }
     }
-  }
+  };
 </script>
 
 

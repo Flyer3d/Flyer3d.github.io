@@ -1,4 +1,4 @@
-const { join } = require('path')
+import { join } from 'path';
 
 module.exports = {
   build: {
@@ -16,4 +16,4 @@ module.exports = {
       { rel: 'preload', as: 'style', href: 'https://fonts.googleapis.com/css?family=Roboto' }
     ]
   }
-}
+};

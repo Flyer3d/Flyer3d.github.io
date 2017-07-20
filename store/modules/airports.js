@@ -1,41 +1,41 @@
-import axios from 'axios'
-import * as types from '../mutation_types'
+import axios from 'axios';
+import * as types from '../mutation_types';
 
 const state = {
   loading: false,
   items: []
-}
+};
 
 const getters = {
-  items (state) {
-    return state.items
+  items(st) {
+    return st.items;
   },
-  loading (state) {
-    return state.loading
+  loading(st) {
+    return st.loading;
   }
-}
+};
 
 const actions = {
-  async suggest ({commit}, term) {
-    commit(types.AIRPORTS_LOADING)
+  async suggest({ commit }, term) {
+    commit(types.AIRPORTS_LOADING);
     try {
-      const response = await axios.get('http://api.delfinchik.net/airports', {params: {q: term}})
-      commit(types.AIRPORTS_LOADED, response.data)
+      const response = await axios.get('http://api.delfinchik.net/airports', { params: { q: term } });
+      commit(types.AIRPORTS_LOADED, response.data);
     } catch (e) {
-      commit(types.AIRPORTS_LOADED, [])
+      commit(types.AIRPORTS_LOADED, []);
     }
   }
-}
+};
 
 const mutations = {
-  [types.AIRPORTS_LOADING] (state) {
-    state.loading = true
+  [types.AIRPORTS_LOADING](st) {
+    st.loading = true;
   },
-  [types.AIRPORTS_LOADED] (state, items) {
-    state.items = items
-    state.loading = false
+  [types.AIRPORTS_LOADED](st, items) {
+    st.items = items;
+    st.loading = false;
   }
-}
+};
 
 export default {
   namespaced: true,
@@ -43,4 +43,4 @@ export default {
   getters,
   actions,
   mutations
-}
+};

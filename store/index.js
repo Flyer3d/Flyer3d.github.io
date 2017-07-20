@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import airports from './modules/airports'
+import airports from './modules/airports';
 
 Vue.use(Vuex);
 
@@ -12,6 +12,6 @@ const store = function () {
       airports
     }
   });
-}
+};
 
 export default store;

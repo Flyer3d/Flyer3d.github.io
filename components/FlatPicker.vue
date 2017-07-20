@@ -13,14 +13,16 @@
 </template>
 
 <script>
-  import 'flatpickr/dist/themes/airbnb.css'
-  import moment from 'moment'
+  /* eslint-disable global-require */
+
+  import 'flatpickr/dist/themes/airbnb.css';
+  import moment from 'moment';
 
   let flatpikr;
   if (process.BROWSER_BUILD) {
-    flatpikr = require('flatpickr')
-    const locale = require('flatpickr/dist/l10n/ru')
-    flatpikr.localize(locale.ru)
+    flatpikr = require('flatpickr');
+    const locale = require('flatpickr/dist/l10n/ru');
+    flatpikr.localize(locale.ru);
   }
 
   export default {
@@ -32,22 +34,22 @@
       minDate: [String, Date],
       maxDate: [String, Date],
     },
-    data () {
+    data() {
       return {
         date: this.value,
         options: {
           minDate: this.minDate || moment().format('YYYY-MM-DD'),
           maxDate: this.maxDate || moment().add(360, 'days').format('YYYY-MM-DD')
         }
-      }
+      };
     },
-    mounted () {
-      flatpikr(this.$refs.control.$refs.input, this.options)
+    mounted() {
+      flatpikr(this.$refs.control.$refs.input, this.options);
     },
     watch: {
       date(val) {
-        this.$emit('input', val)
-        this.$emit('done', val)
+        this.$emit('input', val);
+        this.$emit('done', val);
       }
     },
     date: {
@@ -55,7 +57,7 @@
       startDate: null,
       endDate: null
     }
-  }
+  };
 </script>
 
 <style lang="stylus">

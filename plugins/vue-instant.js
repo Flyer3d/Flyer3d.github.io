@@ -1,5 +1,4 @@
-import Vue from 'vue'
-import Autocomplete from 'vue-instant/dist/vue-instant.common.js'
-// import 'vue-instant/dist/vue-instant.css'
+import Vue from 'vue';
+import Autocomplete from 'vue-instant/dist/vue-instant.common.js';
 
-Vue.use(Autocomplete)
+Vue.use(Autocomplete);
