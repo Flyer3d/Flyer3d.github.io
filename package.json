@@ -12,6 +12,7 @@
     "flatpickr": "^3.0.6",
     "moment": "^2.18.1",
     "nuxt": "latest",
+    "qs": "^6.5.0",
     "vue": "2.3.4",
     "vue-instant": "^1.0.0",
     "vue-server-renderer": "2.3.4",

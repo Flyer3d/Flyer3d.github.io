@@ -1,0 +1,228 @@
+.ticket-destination
+    display table
+    width 100%
+    position relative
+
+    &__head
+        //display: table-row
+        display flex
+        flex-wrap nowrap
+
+    &__nowrap
+        display inline-block
+        white-space nowrap
+        margin-right: 6px
+
+    &__head-wrapper
+        position relative
+        &:after
+            position: absolute;
+            //bottom: -20px
+            left 0
+            width 100%
+            display: none
+            content ''
+            border-top 1px solid $color_border
+
+    &__from-wrapper
+    &__airport-wrapper
+    &__duration-wrapper
+    &__layover-wrapper
+    &__price-wrapper
+        vertical-align: middle
+        display: table-cell
+        padding: 5px
+        box-sizing: border-box
+
+    &__header-from
+    &__header-to
+        display inline-block
+        text-align: left;
+        margin-left 20px
+        white-space: nowrap
+        position: relative
+        padding-left: 25px
+        &:before
+            content: ''
+            display: inline-block
+            width: 22px
+            height: 19px
+            background: url(plane-takeoff.svg) no-repeat 50% 50%
+            background-size: contain
+            vertical-align: bottom
+            margin-right: 5px
+            position: absolute
+            left: 0
+    &__header-to
+        &:before
+            background: url(plane-landing.svg) no-repeat 50% 50%
+            background-size: contain
+
+    &__begin-time
+    &__end-time
+        display inline-block
+        font-weight: 700
+        font-size: 13px
+        //width: 7%
+        text-align: right;
+        margin-right 5px
+        white-space: nowrap
+        position: relative
+        padding-left: 25px
+        &:before
+            content: ''
+            display none
+            width: 22px
+            height: 19px
+            background: url(plane-takeoff.svg) no-repeat 50% 50%
+            background-size: contain
+            vertical-align: bottom
+            margin-right: 5px
+            position: absolute
+            left: 0
+
+    &__end-time
+        &:before
+            background: url(plane-landing.svg) no-repeat 50% 50%
+            background-size: contain
+
+    &__dir
+        font: 500 20px $font-headers, sans-serif
+
+    &__from-wrapper
+        width 100px
+        min-width 100px
+
+    &__airport-wrapper
+        width 35%
+        max-width: 28%;
+        min-width: 28%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding-left: 10px;
+        margin-right: 10px;
+        box-sizing: border-box;
+
+    &__duration-wrapper
+        width 10%
+
+    &__layover-wrapper
+    &__price-wrapper
+        width 20%
+
+    &__price
+        100%
+
+    &__dir
+    &__icons
+        width 100%
+
+    &__from
+    &__to
+        //width: 25%
+        display inline-block
+        font-size: 13px
+        line-height: 1
+
+    &__layover
+        text-align center
+        padding 10px
+        position relative
+        &:before
+            position absolute
+            width 100%
+            top 30px
+            left 0
+            content ''
+            display block
+            border-top 1px solid $color_border
+
+    &__layover-box
+        display inline-block
+        position relative
+        padding 10px 30px
+        color $color_grey
+        z-index 1
+        background $color_lightgray
+
+    &__duration
+    &__layovers
+        width: 100%
+        //padding: 20px
+
+    &__segments
+        padding: 10px 0 30px
+
+
+    &__duration-extended
+        display none
+        line-height 1.6
+        width 100%
+        color $color_grey
+        //padding-left 25px
+        margin-bottom: 20px
+
+
+    &_small
+        background: #ffffff
+        padding: 10px 20px
+        margin: 0 -20px
+
+
+
+    &_small &__begin-date
+    &_small &__begin-time
+    &_small &__end-date
+    &_small &__end-time
+    &_small &__from
+    &_small &__to
+    &_small &__layovers
+    &_small &__vendor
+        padding: 5px 0
+
+
+
+    &_small &__head
+        display: block
+
+    &_small &__layovers
+        display: block
+        width: auto
+        font-size: 13px
+        color: #999999
+
+
+    &_small &__from
+    &_small &__to
+        display: inline-block
+        width: auto
+        font-size: 13px
+
+    &_small &__vendor
+        font-weight: bold
+
+    &_small &__icons
+        float: right
+
+
+    &_small &__row
+        clear: both
+
+.ticket_opened
+    .ticket-destination
+        &:nth-child(even)
+            //border-top: 1px solid $rose-avia-border
+            margin-top 40px
+
+        &__head-wrapper:after
+            display: block
+
+        &__airport-wrapper
+        &__duration-wrapper
+        &__layover-wrapper
+        &__price-wrapper
+            display none
+
+        &__dir
+            margin 10px 0

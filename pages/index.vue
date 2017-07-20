@@ -2,7 +2,6 @@
   <main>
     <v-container fluid>
 
-
       <v-card class="delfin elevation-0">
 
         <v-card-text>
@@ -25,14 +24,18 @@
           </v-layout>
 
           <div class="text-xs-center">
-            <v-btn large dark class="delfin">
+            <v-btn large dark class="delfin" @click.native="search(form)">
               <v-icon dark left>flight</v-icon>
               Найти авиабилеты
             </v-btn>
           </div>
         </v-card-text>
       </v-card>
-      <v-progress-linear v-bind:indeterminate="true" :height="5" warning class="mt-0"></v-progress-linear>
+      <v-progress-linear v-bind:indeterminate="true" :height="5" warning class="mt-0" v-show="searchLoading"></v-progress-linear>
+
+
+      <ticket v-for="item in searchResults" v-bind:key="item.id" :item="item"></ticket>
+
     </v-container>
 
 
@@ -42,22 +45,24 @@
 
 <script>
 
-  import { mapActions } from 'vuex';
+  import { mapActions, mapGetters } from 'vuex';
   import moment from 'moment';
   import FlatPicker from '~components/FlatPicker';
   import Suggest from '~components/Suggest';
+  import Ticket from '~components/Ticket';
 
   export default {
-    components: { FlatPicker, Suggest },
+    components: { FlatPicker, Suggest, Ticket },
     data() {
       return {
         form: {
           route: {
-            departure: null,
-            arrival: null,
-            date: moment().format('YYYY-MM-DD'),
-            date_return: null
+            departure: 'MOW',
+            arrival: 'PAR',
+            date: moment().add(15, 'days').format('YYYY-MM-DD'),
+            date_return: moment().add(25, 'days').format('YYYY-MM-DD')
           },
+          type: 'simple',
           adults: 2,
           kids: 0,
           infants: 0
@@ -66,6 +71,12 @@
         item: '',
         suggestions: []
       };
+    },
+    computed: {
+      ...mapGetters({
+        searchLoading: 'search/loading',
+        searchResults: 'search/items'
+      })
     },
     methods: {
       datesFrom(date) {
@@ -78,7 +89,7 @@
         return item.name;
       },
       ...mapActions({
-        suggest: 'airports/suggest'
+        search: 'search/load'
       }),
       focus(control) {
         this.$refs[control] && this.$refs[control].$refs.control.focus();
