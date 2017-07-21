@@ -88,12 +88,20 @@ const mutations = {
         const first = 0;
         const last = route.segments.length - 1;
 
+        route.departure_country = route.segments[first].departure_country;
+        route.departure_country_name = route.segments[first].departure_country_name;
         route.departure_city = route.segments[first].departure_city;
+        route.departure_city_name = route.segments[first].departure_city_name;
         route.departure_airport = route.segments[first].departure_airport;
+        route.departure_airport_name = route.segments[first].departure_airport_name;
         route.departure_time = route.segments[first].departure_time;
 
+        route.arrival_country = route.segments[first].arrival_country;
+        route.arrival_country_name = route.segments[first].arrival_country_name;
         route.arrival_city = route.segments[last].arrival_city;
+        route.arrival_city_name = route.segments[last].arrival_city_name;
         route.arrival_airport = route.segments[last].arrival_airport;
+        route.arrival_airport_name = route.segments[last].arrival_airport_name;
         route.arrival_time = route.segments[last].arrival_time;
       })
     });

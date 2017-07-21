@@ -1,0 +1,15 @@
+image: node:8.1.4
+
+before_script:
+  - yarn
+
+pages:
+  stage: deploy
+  script:
+  - npm run generate
+  - mv dist public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
