@@ -1,7 +1,6 @@
 <template>
   <main>
     <v-container fluid>
-
       <v-card class="delfin elevation-0">
 
         <v-card-text>
@@ -58,9 +57,9 @@
         form: {
           route: {
             departure: 'MOW',
-            arrival: 'PAR',
-            date: moment().add(15, 'days').format('YYYY-MM-DD'),
-            date_return: moment().add(25, 'days').format('YYYY-MM-DD')
+            arrival: 'LED',
+            date: moment().add('days', 15).format('YYYY-MM-DD'),
+            date_return: moment().add('days', 25).format('YYYY-MM-DD')
           },
           type: 'simple',
           adults: 2,
