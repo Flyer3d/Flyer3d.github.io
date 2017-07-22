@@ -15,5 +15,8 @@ module.exports = {
     link: [
       { rel: 'preload', as: 'style', href: 'https://fonts.googleapis.com/css?family=Roboto' }
     ]
+  },
+  router: {
+    base: '/avia/'
   }
 };
