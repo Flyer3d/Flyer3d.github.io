@@ -53,6 +53,8 @@ const actions = {
 
     commit(LOADING);
     try {
+      console.log('Searching in [http://api.delfinchik.net/search]. Params:');
+      console.dir(queryParams);
       const response = await axios.get(
         'http://api.delfinchik.net/search',
         { params: queryParams }
@@ -72,7 +74,6 @@ const mutations = {
     const items = response.recommendations;
 
     items.forEach(function (item) {
-
       item.routes.forEach(function (route) {
         route.supplier_codes = Array.from(new Set(
           route.segments.map(s => s.supplier_code)
@@ -103,7 +104,7 @@ const mutations = {
         route.arrival_airport = route.segments[last].arrival_airport;
         route.arrival_airport_name = route.segments[last].arrival_airport_name;
         route.arrival_time = route.segments[last].arrival_time;
-      })
+      });
     });
 
     st.items = items;

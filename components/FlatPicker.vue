@@ -32,7 +32,7 @@
       },
       placeholder: String,
       minDate: [String, Date],
-      maxDate: [String, Date],
+      maxDate: [String, Date]
     },
     data() {
       return {
@@ -40,16 +40,28 @@
         options: {
           minDate: this.minDate || moment().format('YYYY-MM-DD'),
           maxDate: this.maxDate || moment().add(360, 'days').format('YYYY-MM-DD')
-        }
+        },
+        fp: null
       };
     },
     mounted() {
-      flatpikr(this.$refs.control.$refs.input, this.options);
+      if(!this.fp) {
+        this.fp = new flatpikr(this.$refs.control.$refs.input, this.options);
+      }
     },
     watch: {
       date(val) {
         this.$emit('input', val);
         this.$emit('done', val);
+      },
+      minDate (val){
+        this.options.minDate = val;
+        if(moment(val).isAfter(this.date)){
+          this.date = val;
+        }
+        this.fp.config = Object.assign(this.fp.config, this.options);
+        this.fp.redraw();
+        this.fp.setDate(this.value, true);
       }
     },
     date: {

@@ -8,17 +8,20 @@
 
           <v-layout row wrap>
             <v-flex xs12 sm6 md3 class="pa-0 pr-1">
-              <suggest v-model="form.route.departure" placeholder="Откуда" @done="focus('arrival')" ref="departure"></suggest>
+              <suggest v-model="departure" placeholder="Откуда" @done="focus('arrival')" ref="departure"></suggest>
             </v-flex>
             <v-flex xs12 sm6 md3 class="pa-0 pr-1">
-              <suggest v-model="form.route.arrival" placeholder="Куда" @done="focus('date')" ref="arrival"></suggest>
+              <suggest v-model="arrival" placeholder="Куда" @done="focus('date')" ref="arrival"></suggest>
             </v-flex>
 
-            <v-flex xs12 sm6 md3 class="pa-0 pr-1">
-              <flat-picker v-model="form.route.date" placeholder="Когда" @done="focus('date_return')" ref="date"></flat-picker>
+            <v-flex xs12 sm3 md2 class="pa-0 pr-1">
+              <flat-picker v-model="date" placeholder="Когда" @done="focus('date_return')" ref="date"></flat-picker>
             </v-flex>
-            <v-flex xs12 sm6 md3 class="pa-0 pr-1">
-              <flat-picker v-model="form.route.date_return" placeholder="Обратно" ref="date_return"></flat-picker>
+            <v-flex xs12 sm3 md2 class="pa-0 pr-1">
+              <flat-picker v-model="date_return" v-bind:minDate="date" placeholder="Обратно" ref="date_return"></flat-picker>
+            </v-flex>
+            <v-flex xs12 sm6 md2 class="pa-0 pr-1">
+              <persons></persons>
             </v-flex>
           </v-layout>
 
@@ -49,23 +52,24 @@
   import FlatPicker from '~components/FlatPicker';
   import Suggest from '~components/Suggest';
   import Ticket from '~components/Ticket';
+  import Persons from '~components/Persons';
 
   export default {
-    components: { FlatPicker, Suggest, Ticket },
+    components: { FlatPicker, Suggest, Ticket, Persons },
     data() {
       return {
-        form: {
-          route: {
-            departure: 'MOW',
-            arrival: 'LED',
-            date: moment().add('days', 15).format('YYYY-MM-DD'),
-            date_return: moment().add('days', 25).format('YYYY-MM-DD')
-          },
-          type: 'simple',
-          adults: 2,
-          kids: 0,
-          infants: 0
-        },
+//        form: {
+//          route: {
+//            departure: 'MOW',
+//            arrival: 'LED',
+//            date: moment().add(15, 'days').format('YYYY-MM-DD'),
+//            date_return: moment().add(25, 'days').format('YYYY-MM-DD')
+//          },
+//          type: 'simple',
+//          adults: 2,
+//          kids: 0,
+//          infants: 0
+//        },
         e3: null,
         item: '',
         suggestions: []
@@ -75,7 +79,42 @@
       ...mapGetters({
         searchLoading: 'search/loading',
         searchResults: 'search/items'
-      })
+      }),
+      form () {
+        return this.$store.state
+      },
+      departure : {
+        get: function () {
+          return this.$store.state.route.departure;
+        },
+        set: function (value) {
+          this.$store.commit('setDeparture', value.code);
+        }
+      },
+      arrival : {
+        get: function () {
+          return this.$store.state.route.arrival;
+        },
+        set: function (value) {
+          this.$store.commit('setArrival', value.code);
+        }
+      },
+      date : {
+        get: function () {
+          return this.$store.state.route.date;
+        },
+        set: function (value) {
+          this.$store.commit('setDate', value);
+        }
+      },
+      date_return : {
+        get: function () {
+          return this.$store.state.route.date_return;
+        },
+        set: function (value) {
+          this.$store.commit('setDateReturn', value);
+        }
+      },
     },
     methods: {
       datesFrom(date) {
