@@ -61,12 +61,10 @@
             <v-flex md6>
               <v-layout row nowrap>
                 <v-btn
-
                   @click.native="kids_decrement"
                   class="plusminus-btn"
                   v-bind:disabled="kids <= 0"
-                >-
-                </v-btn>
+                >-</v-btn>
                 <div class="persons__number">{{ kids }}</div>
                 <v-btn class="plusminus-btn" v-bind:disabled="sum() >= 9" @click.native="kids_increment">+</v-btn>
               </v-layout>
@@ -83,8 +81,7 @@
                   @click.native="infants_decrement"
                   v-bind:disabled="infants <= 0"
                   class="plusminus-btn"
-                >-
-                </v-btn>
+                >-</v-btn>
                 <div class="persons__number">{{ infants }}</div>
                 <span
                   v-tooltip:top=" { html: 'Не более одного младенца\nна одного взрослого', visible: adults <= infants } ">

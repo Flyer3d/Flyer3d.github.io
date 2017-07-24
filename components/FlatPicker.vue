@@ -51,17 +51,19 @@
     },
     watch: {
       date(val) {
+        console.log('date changed to %s', this.date)
         this.$emit('input', val);
         this.$emit('done', val);
       },
       minDate (val){
         this.options.minDate = val;
-        if(moment(val).isAfter(this.date)){
-          this.date = val;
-        }
         this.fp.config = Object.assign(this.fp.config, this.options);
         this.fp.redraw();
-        this.fp.setDate(this.value, true);
+        if(moment(val).isAfter(this.value)){
+          this.fp.setDate(val, true);
+        } else {
+          this.fp.setDate(this.value, true);
+        }
       }
     },
     date: {
