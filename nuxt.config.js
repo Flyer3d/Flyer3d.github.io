@@ -13,10 +13,10 @@ module.exports = {
   ],
   head: {
     link: [
-      { rel: 'preload', as: 'style', href: 'https://fonts.googleapis.com/css?family=Roboto' }
+      {rel: 'preload', as: 'style', href: 'https://fonts.googleapis.com/css?family=Roboto'}
     ]
   },
-  router: {
-    base: '/avia/'
-  }
+  // router: {
+  //   base: '/avia/'
+  // }
 };
