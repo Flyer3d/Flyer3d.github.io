@@ -12,7 +12,7 @@
       content-class="persons__menu"
       :max-height="400"
       :max-width="400"
-      :nudge-top="2"
+      :nudge-top="1"
       :nudge-left="-160"
       transition="none"
       persistent
@@ -44,12 +44,16 @@
                 <span v-tooltip:top=" { html: 'Не более одного младенца\nна одного взрослого', visible: adults <= infants} ">
                   <v-btn
                     v-bind:disabled="(adults <= 1) || (adults <= infants)"
-                    @click.native="adults_decrement"
+                    @click.native="adults--"
                     class="plusminus-btn"
                   >-</v-btn>
                 </span>
                 <div class="persons__number">{{ adults }}</div>
-                <v-btn class="plusminus-btn" v-bind:disabled="sum() >= 9" @click.native="adults_increment">+</v-btn>
+                <v-btn
+                  class="plusminus-btn"
+                  v-bind:disabled="sum() >= 9"
+                  @click.native="adults++"
+                >+</v-btn>
               </v-layout>
             </v-flex>
           </v-layout>
@@ -61,12 +65,16 @@
             <v-flex md6>
               <v-layout row nowrap>
                 <v-btn
-                  @click.native="kids_decrement"
+                  @click.native="kids--"
                   class="plusminus-btn"
                   v-bind:disabled="kids <= 0"
                 >-</v-btn>
                 <div class="persons__number">{{ kids }}</div>
-                <v-btn class="plusminus-btn" v-bind:disabled="sum() >= 9" @click.native="kids_increment">+</v-btn>
+                <v-btn
+                  class="plusminus-btn"
+                  v-bind:disabled="sum() >= 9"
+                  @click.native="kids++"
+                >+</v-btn>
               </v-layout>
             </v-flex>
           </v-layout>
@@ -78,7 +86,7 @@
             <v-flex md6>
               <v-layout row nowrap>
                 <v-btn
-                  @click.native="infants_decrement"
+                  @click.native="infants--"
                   v-bind:disabled="infants <= 0"
                   class="plusminus-btn"
                 >-</v-btn>
@@ -88,7 +96,7 @@
                 <v-btn
                   class="plusminus-btn"
                   v-bind:disabled="adults <= infants || sum() >= 9"
-                  @click.native="infants_increment"
+                  @click.native="infants++"
                 >+</v-btn>
                 </span>
               </v-layout>
@@ -101,7 +109,7 @@
             <v-flex md6>
               <v-select
                 class="persons__select"
-                v-bind:items="items"
+                v-bind:items="list"
                 v-model="aviaClass"
                 ma-0
                 hide-details
@@ -118,41 +126,71 @@
 
 
 <script>
+  const CLASS_LIST = [
+    { text: 'Все',    value: 'A' },
+    { text: 'Эконом', value: 'E' },
+    { text: 'Бизнес', value: 'B' }
+  ]
+
+  import { mapGetters, mapMutations } from 'vuex';
 
   export default {
     data() {
       return {
         items: ['Эконом', 'Комфорт', 'Бизнес'],
-        menu: false
+        menu: false,
+        list: CLASS_LIST
       }
     },
-    mounted() {
-    },
     computed: {
+      ...mapGetters({
+        storeAdults: 'form/adults',
+        storeKids: 'form/kids',
+        storeInfants: 'form/infants',
+        storeAviaClass: 'form/aviaClass'
+
+      }),
       summary() {
         let sum = this.adults + this.kids + this.infants;
-//        return `${ sum } ${this.pluralize(sum, 'человек', 'человека', 'человек')}, ${ this.aviaClass }`
         return `${ sum } ${this.pluralize(sum, 'человек', 'человека', 'человек')}`;
       },
-      adults() {
-        return this.$store.state.adults;
+      adults: {
+        get: function() {
+          return this.storeAdults;
+        },
+        set: function(val) {
+          this.updateForm({adults: val})
+        }
       },
-      kids() {
-        return this.$store.state.kids;
+      kids: {
+        get: function() {
+          return this.storeKids;
+        },
+        set: function(val) {
+          this.updateForm({kids: val});
+        }
       },
-      infants() {
-        return this.$store.state.infants;
+      infants: {
+        get: function() {
+          return this.storeInfants;
+        },
+        set: function(val) {
+          this.updateForm({infants: val})
+        }
       },
       aviaClass: {
         get: function () {
-          return this.$store.state.aviaClass;
+          return this.storeAviaClass;
         },
-        set: function (item) {
-          this.$store.commit('setAviaClass', item);
+        set: function (val) {
+          this.updateForm({aviaClass: val})
         }
       }
     },
     methods: {
+      ...mapMutations({
+        updateForm: 'form/update'
+      }),
       pluralize(n, v1, v2, v3) {
         let plural;
         plural = n % 10 === 1 && n % 100 !== 11 ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2;
@@ -167,24 +205,6 @@
       },
       sum() {
         return this.adults + this.kids + this.infants;
-      },
-      adults_increment() {
-        this.$store.commit('adultsIncrement');
-      },
-      adults_decrement() {
-        this.$store.commit('adultsDecrement');
-      },
-      kids_increment() {
-        this.$store.commit('kidsIncrement');
-      },
-      kids_decrement() {
-        this.$store.commit('kidsDecrement');
-      },
-      infants_increment() {
-        this.$store.commit('infantsIncrement');
-      },
-      infants_decrement() {
-        this.$store.commit('infantsDecrement');
       }
     }
   }

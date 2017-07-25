@@ -36,15 +36,14 @@
 
 <script>
 
-  import { mapActions, mapGetters } from 'vuex';
+  import { mapActions, mapGetters, mapMutations } from 'vuex';
   import moment from 'moment';
   import FlatPicker from './FlatPicker';
   import Suggest from './Suggest';
-  import Ticket from './Ticket';
   import Persons from './Persons';
 
   export default {
-    components: { FlatPicker, Suggest, Ticket, Persons },
+    components: { FlatPicker, Suggest, Persons },
     data() {
       return {
         item: '',
@@ -52,46 +51,48 @@
       };
     },
     computed: {
-      form () {
-        return this.$store.state
-      },
+      ...mapGetters({
+        storeDeparture: 'form/departure',
+        storeArrival: 'form/arrival',
+        storeDate: 'form/date',
+        storeDateReturn: 'form/date_return',
+        form: 'form/form'
+
+      }),
       departure : {
         get: function () {
-          return this.$store.state.route.departure;
+          return this.storeDeparture;
         },
         set: function (value) {
-          this.$store.commit('setDeparture', value.code);
+          this.updateForm({route: {departure: value.code}});
         }
       },
       arrival : {
         get: function () {
-          return this.$store.state.route.arrival;
+          return this.storeArrival;
         },
         set: function (value) {
-          this.$store.commit('setArrival', value.code);
+          this.updateForm({route: {arrival: value.code}});
         }
       },
       date : {
         get: function () {
-          return this.$store.state.route.date;
+          return this.storeDate;
         },
         set: function (value) {
-          this.$store.commit('setDate', value);
+          this.updateForm({route: {date: value}});
         }
       },
       date_return : {
         get: function () {
-          return this.$store.state.route.date_return;
+          return this.storeDateReturn;
         },
         set: function (value) {
-          this.$store.commit('setDateReturn', value);
+          this.updateForm({route: {date_return: value}});
         }
       },
     },
     methods: {
-      datesFrom(date) {
-        return moment(date).isSameOrAfter(moment(), 'day');
-      },
       changed() {
         this.suggest = this.suggest(this.value);
       },
@@ -100,6 +101,9 @@
       },
       ...mapActions({
         search: 'search/load'
+      }),
+      ...mapMutations({
+        updateForm: 'form/update'
       }),
       focus(control) {
         this.$refs[control] && this.$refs[control].$refs.control.focus();

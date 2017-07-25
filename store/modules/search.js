@@ -27,14 +27,14 @@ const getters = {
 };
 
 const actions = {
-  async load({ commit }, { type, route, adults, kids, infants }) {
+  async load({ commit }, { type, route, adults, kids, infants, aviaClass:service_class }) {
     const queryParams = {
       destinations: [],
       adults,
       kids,
-      infants
+      infants,
+      service_class
     };
-
     if (type === 'simple') {
       queryParams.destinations.push({
         departure: route.departure,

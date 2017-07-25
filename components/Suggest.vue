@@ -10,8 +10,8 @@
       bottom
       content-class="menu"
       :max-height="400"
-      :nudge-top="-5"
-      :nudge-left="-12"
+      :nudge-top="1"
+      :nudge-left="0"
       transition="none"
     >
       <v-text-field
