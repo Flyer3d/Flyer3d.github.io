@@ -10,8 +10,9 @@
       bottom
       content-class="menu"
       :max-height="400"
-      :nudge-top="1"
-      :nudge-left="0"
+      :max-width="400"
+      :nudge-top="-5"
+      :nudge-left="-12"
       transition="none"
     >
       <v-text-field
@@ -28,7 +29,7 @@
         @focus="suggest(val.display)"
       ></v-text-field>
       <v-progress-linear v-bind:indeterminate="true" height="3" class="my-0 suggest__loading" warning v-show="loading"></v-progress-linear>
-      <v-list two-line class="suggest__airports" dense >
+      <v-list two-line class="suggest__airports" >
         <v-list-tile v-for="item in items" :key="item.id" @click.native="select(item)">
           <v-list-tile-content>
             <v-list-tile-title v-html="item.title"></v-list-tile-title>

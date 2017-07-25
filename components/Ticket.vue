@@ -66,6 +66,10 @@
 
 <script>
   export default {
-    props: ['item']
+    props: ['item'],
+    mounted(){
+      console.log('\nItem!')
+      console.dir(this.item)
+    }
   };
 </script>

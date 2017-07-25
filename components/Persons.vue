@@ -8,12 +8,12 @@
       offset-y
       full-width
       bottom
-      right
+      left
       content-class="persons__menu"
       :max-height="400"
       :max-width="400"
-      :nudge-top="1"
-      :nudge-left="-160"
+      :nudge-top="-5"
+      :nudge-left="-5"
       transition="none"
       persistent
     >
@@ -216,6 +216,7 @@
     margin: 18px 0
     padding-left: 8px
     position: relative
+    overflow: hidden
 
   .persons__menu
     overflow: visible;

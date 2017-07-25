@@ -1,4 +1,18 @@
 <template>
+  <v-menu
+    :close-on-content-click="false"
+    ref="menu"
+    v-model="menu"
+    offset-y
+    full-width
+    bottom
+    content-class="menu"
+    :max-height="400"
+    :max-width="308"
+    :nudge-top="-1"
+    :nudge-left="-0"
+    transition="none"
+  >
   <v-text-field
     ref="control"
     slot="activator"
@@ -10,6 +24,9 @@
     hide-details
     full-width
   ></v-text-field>
+    <v-card class="flat-picker__card">
+    </v-card>
+  </v-menu>
 </template>
 
 <script>
@@ -36,28 +53,30 @@
     },
     data() {
       return {
+        menu: false,
         date: this.value,
         options: {
+          onChange: this.onDateChange,
+          defaultDate: this.value,
           minDate: this.minDate || moment().format('YYYY-MM-DD'),
-          maxDate: this.maxDate || moment().add(360, 'days').format('YYYY-MM-DD')
+          maxDate: this.maxDate || moment().add(360, 'days').format('YYYY-MM-DD'),
+          inline: true
         },
         fp: null
       };
     },
     mounted() {
       if(!this.fp) {
-        this.fp = new flatpikr(this.$refs.control.$refs.input, this.options);
+        this.fp = new flatpikr(this.$refs.menu.$refs.content.firstChild, this.options);
       }
     },
     watch: {
       date(val) {
-        console.log('date changed to %s', this.date)
         this.$emit('input', val);
         this.$emit('done', val);
       },
       minDate (val){
-        this.options.minDate = val;
-        this.fp.config = Object.assign(this.fp.config, this.options);
+        this.fp.config.minDate = this.options.minDate = val;
         this.fp.redraw();
         if(moment(val).isAfter(this.value)){
           this.fp.setDate(val, true);
@@ -66,6 +85,13 @@
         }
       }
     },
+    methods: {
+      onDateChange(selectedDate, dateStr, instance){
+        this.date = dateStr;
+        this.menu = false;
+      }
+    },
+
     date: {
       value: null,
       startDate: null,
