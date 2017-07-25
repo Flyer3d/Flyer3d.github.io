@@ -26,7 +26,7 @@
         :placeholder="placeholder"
         slot="activator"
         class="date white ma-1 pa-0"
-        @focus="suggest(val.display)"
+        @focus="onFocus(val.display)"
       ></v-text-field>
       <v-progress-linear v-bind:indeterminate="true" height="3" class="my-0 suggest__loading" warning v-show="loading"></v-progress-linear>
       <v-list two-line class="suggest__airports" >
@@ -85,6 +85,10 @@
         };
 
         this.$refs.control.$refs.input.focus();
+      },
+      onFocus(val) {
+        this.$refs.control.$refs.input.select();
+        this.suggest(val);
       },
       select(item) {
         this.val.airport = item;
