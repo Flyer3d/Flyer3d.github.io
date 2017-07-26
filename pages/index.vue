@@ -1,9 +1,19 @@
 <template>
   <main>
     <v-container fluid>
+      <h2>SerchStatus == {{ searchStatus }} </h2>
       <avia-form></avia-form>
       <v-progress-linear v-bind:indeterminate="true" :height="5" warning class="mt-0" v-show="searchLoading"></v-progress-linear>
-      <ticket v-for="item in searchResults" v-bind:key="item.id" :item="item"></ticket>
+      <template v-if="searchStatus == 'OK'">
+        <template v-for="item in showNResults(itemsOnPage)">
+          <ticket  v-bind:key="item.id" :item="item"></ticket>
+          <v-divider></v-divider>
+        </template>
+        <v-pagination v-bind:length.number="totalPages" v-model="page"></v-pagination>
+      </template>
+      <template v-else-if="searchStatus == 'ERROR'">
+        <div class="mt-3">По вашему запросу билетов не найдено</div>
+      </template>
     </v-container>
   </main>
 </template>
@@ -17,13 +27,32 @@
   export default {
     components: { AviaForm, Ticket },
     data() {
-      return {};
+      return {
+        page: 1,
+        itemsOnPage: 10
+      };
     },
     computed: {
       ...mapGetters({
         searchLoading: 'search/loading',
-        searchResults: 'search/items'
-      })
+        searchResults: 'search/items',
+        searchStatus: 'search/status'
+      }),
+      totalPages () {
+        return this.searchResults && Math.ceil(this.searchResults.length / this.itemsOnPage);
+      }
+    },
+    watch: {
+      searchLoading (val) {
+        if(val){
+          this.page = 1;
+        }
+      }
+    },
+    methods: {
+      showNResults(n) {
+        return this.searchResults && this.searchResults.slice(n * (this.page-1), n * this.page);
+      }
     }
   };
 </script>

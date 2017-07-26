@@ -51,7 +51,6 @@ const getters = {
 const mutations = {
   update(st, form) {
     st.form = _.merge(st.form, form);
-//    st.form = Object.assign(st.form, form);
   }
 };
 

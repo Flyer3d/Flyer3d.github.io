@@ -1,7 +1,7 @@
 import axios from 'axios';
 import moment from 'moment';
 import qs from 'qs';
-import { SEARCH_LOADING as LOADING, SEARCH_LOADED as LOADED } from '../mutation_types';
+import { SEARCH_LOADING as LOADING, SEARCH_LOADED as LOADED , SEARCH_ERROR as ERROR } from '../mutation_types';
 
 
 axios.defaults.paramsSerializer = function (params) {
@@ -11,6 +11,7 @@ axios.defaults.paramsSerializer = function (params) {
 const state = {
   loading: false,
   session: null,
+  status: 'UNKNOWN',
   items: []
 };
 
@@ -23,6 +24,9 @@ const getters = {
   },
   session(store) {
     return store.session;
+  },
+  status(store) {
+    return store.status;
   }
 };
 
@@ -59,13 +63,10 @@ const actions = {
         'http://api.delfinchik.net/search',
         { params: queryParams }
       );
-      console.log('Search/load!');
-      console.dir(response);
+
       commit(LOADED, response.data);
     } catch (e) {
-      console.log('Search/LOADED ERROR!!');
-      console.dir(e);
-      commit(LOADING, []);
+      commit(ERROR);
     }
   }
 };
@@ -73,10 +74,15 @@ const actions = {
 const mutations = {
   [LOADING](st) {
     st.loading = true;
+    st.status = 'LOADING';
+  },
+  [ERROR](st) {
+    st.loading = false;
+    st.status = 'ERROR';
+    st.items = [];
+    st.session = null;
   },
   [LOADED](st, response) {
-    console.log('Search/LOADED!');
-    console.dir(response);
     const items = response.recommendations;
 
     items.forEach(function (item) {
@@ -114,7 +120,7 @@ const mutations = {
     });
 
     st.items = items;
-
+    st.status = 'OK';
     st.session = response.session;
     st.loading = false;
   }
