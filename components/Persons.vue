@@ -271,10 +271,15 @@
 
   [data-tooltip][data-tooltip-location=topleft]:before {
     bottom: 100%;
-    left: -120%;
+    left: 50%;
     -webkit-transform: translate3d(-50%,14px,0) scale(0);
     transform: translate3d(-50%,14px,0) scale(0);
     -webkit-transform-origin: center bottom;
     transform-origin: center bottom;
+  }
+
+  [data-tooltip][data-tooltip-location=topleft]:hover:before {
+    -webkit-transform: translate3d(-50%,-14px,0) scale(1);
+    transform: translate3d(-84%,-14px,0) scale(1);
   }
 </style>
