@@ -1,10 +1,11 @@
 <template>
   <v-layout class="suggest white elevation-4 pt-1">
-    <v-btn small icon absolute class="suggest__clear" v-show="val.display" @click="clear()">
+    <v-btn small icon absolute class="suggest__clear" v-show="val.display" @click.stop="clear()">
       <v-icon>close</v-icon>
     </v-btn>
     <v-menu
       ref="menu"
+      :close-on-click="true"
       offset-y
       full-width
       bottom
@@ -14,6 +15,7 @@
       :nudge-top="-5"
       :nudge-left="-12"
       transition="none"
+      v-bind="showMenu"
     >
       <v-text-field
         ref="control"
@@ -21,12 +23,14 @@
         readonly
         autocomplete="off"
         full-width
+        required
         single-line
         hide-details
         :placeholder="placeholder"
         slot="activator"
         class="date white ma-1 pa-0"
         @focus="onFocus(val.display)"
+        @blur="onBlur"
       ></v-text-field>
       <v-progress-linear v-bind:indeterminate="true" height="3" class="my-0 suggest__loading" warning v-show="loading"></v-progress-linear>
       <v-list two-line class="suggest__airports" >
@@ -50,6 +54,7 @@
     props: ['value', 'placeholder'],
     data() {
       return {
+        showMenu:false,
         val: {
           airport: null,
           display: this.value && this.value.title
@@ -59,6 +64,9 @@
     },
     mounted() {
       this.suggest(this.val.display);
+      console.log('Suggest mounted');
+      console.dir(this.$refs.control.$refs.input)
+      this.$refs.control.$refs.input.onblur = this.onBlur
     },
     computed: {
       ...mapGetters({
@@ -78,17 +86,25 @@
       ...mapActions({
         suggest: 'airports/suggest'
       }),
+      validate () {
+        return Boolean(val.airport)
+      },
       clear() {
         this.val = {
           airport: null,
           display: ''
-        };
 
+        };
+        this.$emit('input', {code: ''});
+//        this.$refs.control.focus();
         this.$refs.control.$refs.input.focus();
       },
       onFocus(val) {
         this.$refs.control.$refs.input.select();
         this.suggest(val);
+      },
+      onBlur(){
+        this.showMenu = false;
       },
       select(item) {
         this.val.airport = item;
@@ -101,7 +117,7 @@
         this.$refs.menu.deactivate();
       }
     }
-  };
+  }
 </script>
 
 
@@ -114,6 +130,7 @@
     &__clear
       right: 5px
       top: 8px
+      z-index: 1000
 
     &__airports
       min-width: 400px

@@ -1,7 +1,6 @@
 <template>
   <main>
     <v-container fluid>
-      <h2>SerchStatus == {{ searchStatus }} </h2>
       <avia-form></avia-form>
       <v-progress-linear v-bind:indeterminate="true" :height="5" warning class="mt-0" v-show="searchLoading"></v-progress-linear>
       <template v-if="searchStatus == 'OK'">
@@ -12,7 +11,7 @@
         <v-pagination v-bind:length.number="totalPages" v-model="page"></v-pagination>
       </template>
       <template v-else-if="searchStatus == 'ERROR'">
-        <div class="mt-3">По вашему запросу билетов не найдено</div>
+        <h5 class="mt-4 center">По вашему запросу билетов не найдено</h5>
       </template>
     </v-container>
   </main>

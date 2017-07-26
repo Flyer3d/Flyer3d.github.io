@@ -55,7 +55,7 @@
           </v-layout>
           <v-layout row nowrap mb-2>
             <v-flex md5>
-              <div class="text">Дети</div>
+              <div class="text">Дети до 12 лет</div>
             </v-flex>
             <v-flex md7>
               <v-layout row nowrap>
@@ -75,7 +75,7 @@
           </v-layout>
           <v-layout row nowrap mb-2>
             <v-flex md5>
-              <div class="text">Младенцы</div>
+              <div class="text">Дети до 2 лет<br>(без места)</div>
             </v-flex>
             <v-flex md7>
               <v-layout row nowrap>

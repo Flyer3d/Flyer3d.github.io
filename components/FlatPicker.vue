@@ -6,24 +6,37 @@
     offset-y
     full-width
     bottom
-    content-class="menu"
+    content-class="menu flat-picker__menu"
     :max-height="400"
     :max-width="308"
     :nudge-top="-1"
     :nudge-left="-0"
     transition="none"
   >
+  <div slot="activator" class="flat-picker__input">
+    <v-btn
+      v-tooltip:left=" { html: 'Обратный билет не нужен', visible: clear && date} "
+      small
+      icon
+      absolute
+      class="flat-picker__clear" v-show="clear && date" @click.stop="clearDate()">
+      <v-icon>close</v-icon>
+    </v-btn>
   <v-text-field
+    disabled
+    readonly
     ref="control"
-    slot="activator"
     v-model="date"
     readonly
-    class="date white pa-1 pt-2 pl-3 pb-0 elevation-4"
+    class="flat-picker__date white pa-1 pt-2 pl-3 pb-0 elevation-4"
     :placeholder="placeholder"
     single-line
     hide-details
     full-width
-  ></v-text-field>
+  >
+  </v-text-field>
+  </div>
+
     <v-card class="flat-picker__card">
     </v-card>
   </v-menu>
@@ -49,10 +62,14 @@
       },
       placeholder: String,
       minDate: [String, Date],
-      maxDate: [String, Date]
+      maxDate: [String, Date],
+      clear: {
+        default: false
+      }
     },
     data() {
       return {
+        showClearButton: true,
         menu: false,
         date: this.value,
         options: {
@@ -89,6 +106,9 @@
       onDateChange(selectedDate, dateStr, instance){
         this.date = dateStr;
         this.menu = false;
+      },
+      clearDate () {
+        this.fp.setDate(null, true);
       }
     },
 
@@ -101,6 +121,26 @@
 </script>
 
 <style lang="stylus">
+  .flat-picker
+    margin: 18px 0
+    padding-left: 8px
+    position: relative
+
+    &__input
+      position relative
+
+    &__clear
+      right: 5px
+      top: 8px
+      z-index 1000
+
+    &__date.input-group--disabled.input-group
+      position relative
+
+    &__date.input-group--disabled.input-group input
+      color: rgba(0,0,0,.87)
+
+
   .flatpickr-calendar
     border-radius: 0
 

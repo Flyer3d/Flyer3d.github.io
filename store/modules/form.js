@@ -4,8 +4,10 @@ import _ from 'lodash';
 const state = {
   form: {
     route: {
-      departure: 'MOW',
-      arrival: 'LED',
+//      departure: 'MOW',
+//      arrival: 'LED',
+      departure: '',
+      arrival: '',
       date: moment().add(15, 'days').format('YYYY-MM-DD'),
       date_return: moment().add(25, 'days').format('YYYY-MM-DD')
     },

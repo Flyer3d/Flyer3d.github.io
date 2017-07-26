@@ -16,7 +16,7 @@
           <flat-picker v-model="date" placeholder="Когда" @done="focus('date_return')" ref="date"></flat-picker>
         </v-flex>
         <v-flex xs12 sm3 md2 class="pa-0 pr-1">
-          <flat-picker v-model="date_return" v-bind:minDate="date" placeholder="Обратно" ref="date_return"></flat-picker>
+          <flat-picker v-model="date_return" v-bind:minDate="date" :clear="true" placeholder="Только туда" ref="date_return"></flat-picker>
         </v-flex>
         <v-flex xs12 sm6 md2 class="pa-0 pr-1">
           <persons></persons>
@@ -24,10 +24,12 @@
       </v-layout>
 
       <div class="text-xs-center">
-        <v-btn large dark class="delfin" @click.native="search(form)">
+        <span v-tooltip:top=" { html: 'Заполните обязательные поля!', visible: !(storeDeparture && storeArrival)} ">
+        <v-btn large dark class="delfin" @click.native="search(form)" v-bind:disabled="!(storeDeparture && storeArrival)">
           <v-icon dark left>flight</v-icon>
           Найти авиабилеты
         </v-btn>
+        </span>
       </div>
     </v-card-text>
   </v-card>
