@@ -22,23 +22,25 @@
         ref="control"
         v-model="summary"
         readonly
+        disabled
         autocomplete="off"
         full-width
         single-line
         hide-details
         slot="activator"
-        class="date white ma-1 pa-0"
+        class="persons__date white ma-1 pa-0"
       ></v-text-field>
       <v-card class="elevation-0">
         <v-card-text>
-          <v-layout row nowrap mb-2>
+          <v-layout row nowrap mb-3>
             <v-flex md5>
-              <div class="text">Взрослые</div>
+              <div class="persons__text">Взрослые</div>
             </v-flex>
             <v-flex md7>
               <v-layout row nowrap>
                 <span v-tooltip:top=" { html: 'Не более одного младенца\nна одного взрослого', visible: adults <= infants} ">
                   <v-btn
+                    outline
                     v-bind:disabled="(adults <= 1) || (adults <= infants)"
                     @click.native="adults--"
                     class="plusminus-btn"
@@ -46,6 +48,7 @@
                 </span>
                 <div class="persons__number">{{ adults }}</div>
                 <v-btn
+                  outline
                   class="plusminus-btn"
                   v-bind:disabled="sum() >= 9"
                   @click.native="adults++"
@@ -53,19 +56,21 @@
               </v-layout>
             </v-flex>
           </v-layout>
-          <v-layout row nowrap mb-2>
+          <v-layout row nowrap mb-3>
             <v-flex md5>
-              <div class="text">Дети до 12 лет</div>
+              <div class="persons__text">Дети до 12 лет</div>
             </v-flex>
             <v-flex md7>
               <v-layout row nowrap>
                 <v-btn
+                  outline
                   @click.native="kids--"
                   class="plusminus-btn"
                   v-bind:disabled="kids <= 0"
                 >-</v-btn>
                 <div class="persons__number">{{ kids }}</div>
                 <v-btn
+                  outline
                   class="plusminus-btn"
                   v-bind:disabled="sum() >= 9"
                   @click.native="kids++"
@@ -73,13 +78,14 @@
               </v-layout>
             </v-flex>
           </v-layout>
-          <v-layout row nowrap mb-2>
+          <v-layout row nowrap mb-3>
             <v-flex md5>
-              <div class="text">Дети до 2 лет<br>(без места)</div>
+              <div class="persons__text">Дети до 2 лет<br>(без места)</div>
             </v-flex>
             <v-flex md7>
               <v-layout row nowrap>
                 <v-btn
+                  outline
                   @click.native="infants--"
                   v-bind:disabled="infants <= 0"
                   class="plusminus-btn"
@@ -88,6 +94,7 @@
                 <span
                   v-tooltip:topleft=" { html: 'Не более одного младенца\nна одного взрослого', visible: adults <= infants } ">
                 <v-btn
+                  outline
                   class="plusminus-btn"
                   v-bind:disabled="adults <= infants || sum() >= 9"
                   @click.native="infants++"
@@ -96,29 +103,22 @@
               </v-layout>
             </v-flex>
           </v-layout>
-          <v-layout row nowrap mb-2>
+          <v-layout row nowrap mb-3>
             <v-flex md5>
               <div class="text">Класс билета</div>
             </v-flex>
             <v-flex md7>
-          <!--</v-layout>-->
+
               <v-layout>
               <v-btn-toggle
                 v-bind:items="list"
-                class="persons__select-button elevation-2"
+                class="persons__select-button elevation-0"
                 v-model="aviaClass"
                 mandatory
                 block
               ></v-btn-toggle>
               </v-layout>
-              <!--<v-select-->
-                <!--class="persons__select"-->
-                <!--v-bind:items="list"-->
-                <!--v-model="aviaClass"-->
-                <!--ma-0-->
-                <!--hide-details-->
-                <!--bottom-->
-              <!--&gt;</v-select>-->
+
             </v-flex>
           </v-layout>
           <v-layout>
@@ -133,17 +133,17 @@
 
 <script>
   const CLASS_LIST = [
-    { text: 'Все',    value: 'A' },
-    { text: 'Эконом', value: 'E' },
-    { text: 'Бизнес', value: 'B' }
-  ]
+    { text: 'Все', toptext: 'Все классы', value: 'A' },
+    { text: 'Эконом', toptext: 'Эконом', value: 'E' },
+    { text: 'Бизнес', toptext: 'Бизнес', value: 'B' }
+  ];
 
   import { mapGetters, mapMutations } from 'vuex';
+  import _ from 'lodash';
 
   export default {
     data() {
       return {
-        items: ['Эконом', 'Комфорт', 'Бизнес'],
         menu: false,
         list: CLASS_LIST
       }
@@ -158,7 +158,8 @@
       }),
       summary() {
         let sum = this.adults + this.kids + this.infants;
-        return `${ sum } ${this.pluralize(sum, 'пассажир', 'пассажира', 'пассажиров')}`;
+        let aC = _.find(this.list, {value: this.aviaClass}).toptext;
+        return `${ sum } ${this.pluralize(sum, 'пассажир', 'пассажира', 'пассажиров')}, ${aC}`;
       },
       adults: {
         get: function() {
@@ -225,6 +226,12 @@
     overflow: hidden
     line-height 1.2
 
+    &__date.input-group--disabled.input-group input
+      color: rgba(0,0,0,.87)
+
+    &__text
+      line-height 1.2
+
   .persons__select-button
     padding 0
     width: 100%;
@@ -251,6 +258,7 @@
     margin 0
     min-width 36px
     width 36px
+    border: 1px solid #bbb;
 
   .plusminus-input
     width: 20px;
