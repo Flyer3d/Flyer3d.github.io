@@ -59,8 +59,12 @@ const actions = {
         'http://api.delfinchik.net/search',
         { params: queryParams }
       );
+      console.log('Search/load!');
+      console.dir(response);
       commit(LOADED, response.data);
     } catch (e) {
+      console.log('Search/LOADED ERROR!!');
+      console.dir(e);
       commit(LOADING, []);
     }
   }
@@ -71,6 +75,8 @@ const mutations = {
     st.loading = true;
   },
   [LOADED](st, response) {
+    console.log('Search/LOADED!');
+    console.dir(response);
     const items = response.recommendations;
 
     items.forEach(function (item) {

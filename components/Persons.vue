@@ -12,6 +12,7 @@
       content-class="persons__menu"
       :max-height="400"
       :max-width="400"
+      :min-width="360"
       :nudge-top="-5"
       :nudge-left="-5"
       transition="none"
@@ -29,17 +30,12 @@
         class="date white ma-1 pa-0"
       ></v-text-field>
       <v-card class="elevation-0">
-        <v-card-title>
-          <div class="headline">Выберите число пассажиров</div>
-        </v-card-title>
-
         <v-card-text>
           <v-layout row nowrap mb-2>
-            <v-flex md6>
+            <v-flex md5>
               <div class="text">Взрослые</div>
-              <div class="label">От 12 лет</div>
             </v-flex>
-            <v-flex md6>
+            <v-flex md7>
               <v-layout row nowrap>
                 <span v-tooltip:top=" { html: 'Не более одного младенца\nна одного взрослого', visible: adults <= infants} ">
                   <v-btn
@@ -58,11 +54,10 @@
             </v-flex>
           </v-layout>
           <v-layout row nowrap mb-2>
-            <v-flex md6>
+            <v-flex md5>
               <div class="text">Дети</div>
-              <div class="label">От 2 до 12 лет</div>
             </v-flex>
-            <v-flex md6>
+            <v-flex md7>
               <v-layout row nowrap>
                 <v-btn
                   @click.native="kids--"
@@ -79,11 +74,10 @@
             </v-flex>
           </v-layout>
           <v-layout row nowrap mb-2>
-            <v-flex md6>
+            <v-flex md5>
               <div class="text">Младенцы</div>
-              <div class="label">До 2 лет</div>
             </v-flex>
-            <v-flex md6>
+            <v-flex md7>
               <v-layout row nowrap>
                 <v-btn
                   @click.native="infants--"
@@ -92,7 +86,7 @@
                 >-</v-btn>
                 <div class="persons__number">{{ infants }}</div>
                 <span
-                  v-tooltip:top=" { html: 'Не более одного младенца\nна одного взрослого', visible: adults <= infants } ">
+                  v-tooltip:topleft=" { html: 'Не более одного младенца\nна одного взрослого', visible: adults <= infants } ">
                 <v-btn
                   class="plusminus-btn"
                   v-bind:disabled="adults <= infants || sum() >= 9"
@@ -102,22 +96,34 @@
               </v-layout>
             </v-flex>
           </v-layout>
-          <v-layout row nowrap>
-            <v-flex md6>
+          <v-layout row nowrap mb-2>
+            <v-flex md5>
               <div class="text">Класс билета</div>
             </v-flex>
-            <v-flex md6>
-              <v-select
-                class="persons__select"
+            <v-flex md7>
+          <!--</v-layout>-->
+              <v-layout>
+              <v-btn-toggle
                 v-bind:items="list"
+                class="persons__select-button elevation-2"
                 v-model="aviaClass"
-                ma-0
-                hide-details
-                bottom
-              ></v-select>
+                mandatory
+                block
+              ></v-btn-toggle>
+              </v-layout>
+              <!--<v-select-->
+                <!--class="persons__select"-->
+                <!--v-bind:items="list"-->
+                <!--v-model="aviaClass"-->
+                <!--ma-0-->
+                <!--hide-details-->
+                <!--bottom-->
+              <!--&gt;</v-select>-->
             </v-flex>
           </v-layout>
+          <v-layout>
           <v-btn block @click.native="menu=false">Закрыть</v-btn>
+          </v-layout>
         </v-card-text>
       </v-card>
     </v-menu>
@@ -152,7 +158,7 @@
       }),
       summary() {
         let sum = this.adults + this.kids + this.infants;
-        return `${ sum } ${this.pluralize(sum, 'человек', 'человека', 'человек')}`;
+        return `${ sum } ${this.pluralize(sum, 'пассажир', 'пассажира', 'пассажиров')}`;
       },
       adults: {
         get: function() {
@@ -217,6 +223,17 @@
     padding-left: 8px
     position: relative
     overflow: hidden
+    line-height 1.2
+
+  .persons__select-button
+    padding 0
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    .btn__content:before
+      background #000
+
 
   .persons__menu
     overflow: visible;
@@ -246,9 +263,18 @@
     flex-grow: 1;
     text-align: center;
     background: rgba(100, 100, 100, 0.1);
-    line-height: 2.5;
+    line-height: 2;
 
   .label
     font-size: 80%
     line-height: 1
+
+  [data-tooltip][data-tooltip-location=topleft]:before {
+    bottom: 100%;
+    left: -120%;
+    -webkit-transform: translate3d(-50%,14px,0) scale(0);
+    transform: translate3d(-50%,14px,0) scale(0);
+    -webkit-transform-origin: center bottom;
+    transform-origin: center bottom;
+  }
 </style>
