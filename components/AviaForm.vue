@@ -6,10 +6,10 @@
 
       <v-layout row wrap>
         <v-flex xs12 sm6 md3 class="pa-0 pr-1">
-          <suggest v-model="departure" placeholder="Откуда" @done="focus('arrival')" ref="departure"></suggest>
+          <suggest v-model="departure" placeholder="Откуда" @done="focus('arrival')" @focus="departureError = false" ref="departure" :isError="departureError"></suggest>
         </v-flex>
         <v-flex xs12 sm6 md3 class="pa-0 pr-1">
-          <suggest v-model="arrival" placeholder="Куда" @done="focus('date')" ref="arrival"></suggest>
+          <suggest v-model="arrival" placeholder="Куда" @done="focus('date')" @focus="arrivalError = false" ref="arrival" :isError="arrivalError"></suggest>
         </v-flex>
 
         <v-flex xs12 sm3 md2 class="pa-0 pr-1">
@@ -24,8 +24,8 @@
       </v-layout>
 
       <div class="text-xs-center">
-        <span v-tooltip:top=" { html: 'Заполните обязательные поля!', visible: !(storeDeparture && storeArrival)} ">
-        <v-btn large dark class="delfin avia-form__submit" @click.native="search(form)" v-bind:disabled="!(storeDeparture && storeArrival)">
+        <span v-tooltip:top=" { html: 'Заполните обязательные поля!', visible: !(departureError && arrivalError)} ">
+        <v-btn large dark class="delfin avia-form__submit" @click.native="submit">
           <v-icon dark left>flight</v-icon>
           Найти авиабилеты
         </v-btn>
@@ -49,7 +49,9 @@
     data() {
       return {
         item: '',
-        suggestions: []
+        suggestions: [],
+        departureError: false,
+        arrivalError: false
       };
     },
     computed: {
@@ -95,11 +97,28 @@
       },
     },
     methods: {
+      validate(){
+        let valid = true;
+        if(!this.departure){
+          valid = false;
+          this.departureError = true;
+        }
+        if(!this.arrival){
+          valid = false;
+          this.arrivalError = true;
+        }
+        return valid;
+      },
       changed() {
         this.suggest = this.suggest(this.value);
       },
       getLabel(item) {
         return item.name;
+      },
+      submit () {
+        if(this.validate()){
+          this.search(this.form);
+        }
       },
       ...mapActions({
         search: 'search/load'
@@ -121,7 +140,7 @@
 
     & &__submit.theme--dark.btn--disabled:not(.btn--icon):not(.btn--flat)
       background: #ff9a0d !important;
-      opacity: .7;
+      /*opacity: .7;*/
       color: #fff;
 
 </style>

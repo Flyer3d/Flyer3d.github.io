@@ -1,15 +1,15 @@
 <template>
-  <v-layout class="suggest white elevation-4 pt-1">
+  <v-layout class="suggest elevation-4 pt-1" v-bind:class="{suggest_error: isError, white: !isError}">
     <v-btn small icon absolute class="suggest__clear" v-show="val.display" @click.stop="clear()">
       <v-icon>close</v-icon>
     </v-btn>
     <v-menu
-      ref="menu"
+      ref="menu "
       :close-on-click="true"
       offset-y
       full-width
       bottom
-      content-class="menu"
+      content-class="menu suggest__menu"
       :max-height="400"
       :max-width="400"
       :nudge-top="-5"
@@ -28,7 +28,7 @@
         hide-details
         :placeholder="placeholder"
         slot="activator"
-        class="date white ma-1 pa-0"
+        class="suggest__input ma-1 pa-0"
         @focus="onFocus(val.display)"
         @blur="onBlur"
       ></v-text-field>
@@ -51,7 +51,7 @@
   import { mapGetters, mapActions } from 'vuex';
 
   export default {
-    props: ['value', 'placeholder'],
+    props: ['value', 'placeholder', 'isError'],
     data() {
       return {
         showMenu:false,
@@ -103,6 +103,7 @@
       onFocus(val) {
         this.$refs.control.$refs.input.select();
         this.suggest(val);
+        this.$emit('focus');
       },
       onBlur(){
         this.showMenu = false;
@@ -123,10 +124,15 @@
 
 
 <style lang="stylus">
+  .suggest.suggest_error
+    background: #ffcccc
+    border 1px solid #FF4A4A
+
   .suggest
     margin: 18px 0
     padding-left: 8px
     position: relative
+
 
     &__clear
       right: 5px
