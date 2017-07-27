@@ -31,7 +31,7 @@ const getters = {
 };
 
 const actions = {
-  async load({ commit }, { type, route, adults, kids, infants, aviaClass:service_class }) {
+  async load({ commit }, { type, route, adults, kids, infants, aviaClass: service_class }) {
     const queryParams = {
       destinations: [],
       adults,

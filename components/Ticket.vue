@@ -40,7 +40,7 @@
               <div class="ticket-destination__layover-wrapper">
                 <div class="ticket-destination__layovers ticket__hide">
                   <template v-if="route.segments.length === 1">Без пересадок</template>
-                  <template v-if="route.segments.length === 2">
+                  <template v-else>
                     {{ route.segments.length - 1 }} пересадка
                     <span>{{ route.layover_duration }}</span>
                   </template>

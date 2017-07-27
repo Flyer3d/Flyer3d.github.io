@@ -12,9 +12,9 @@
       content-class="persons__menu"
       :max-height="400"
       :max-width="400"
-      :min-width="360"
+      :min-width="400"
       :nudge-top="-5"
-      :nudge-left="-5"
+      :nudge-left="-4"
       transition="none"
       persistent
     >
@@ -33,10 +33,10 @@
       <v-card class="elevation-0">
         <v-card-text>
           <v-layout row nowrap mb-3>
-            <v-flex md5>
+            <v-flex md4>
               <div class="persons__text">Взрослые</div>
             </v-flex>
-            <v-flex md7>
+            <v-flex md8>
               <v-layout row nowrap>
                 <span v-tooltip:top=" { html: 'Не более одного младенца\nна одного взрослого', visible: adults <= infants} ">
                   <v-btn
@@ -57,10 +57,10 @@
             </v-flex>
           </v-layout>
           <v-layout row nowrap mb-3>
-            <v-flex md5>
+            <v-flex md4>
               <div class="persons__text">Дети до 12 лет</div>
             </v-flex>
-            <v-flex md7>
+            <v-flex md8>
               <v-layout row nowrap>
                 <v-btn
                   outline
@@ -79,10 +79,10 @@
             </v-flex>
           </v-layout>
           <v-layout row nowrap mb-3>
-            <v-flex md5>
+            <v-flex md4>
               <div class="persons__text">Дети до 2 лет<br>(без места)</div>
             </v-flex>
-            <v-flex md7>
+            <v-flex md8>
               <v-layout row nowrap>
                 <v-btn
                   outline
@@ -104,10 +104,10 @@
             </v-flex>
           </v-layout>
           <v-layout row nowrap mb-3>
-            <v-flex md5>
+            <v-flex md4>
               <div class="text">Класс билета</div>
             </v-flex>
-            <v-flex md7>
+            <v-flex md8>
 
               <v-layout>
               <v-btn-toggle
@@ -133,7 +133,7 @@
 
 <script>
   const CLASS_LIST = [
-    { text: 'Все', toptext: 'Все классы', value: 'A' },
+    { text: 'Любой', toptext: 'Любой класс', value: 'A' },
     { text: 'Эконом', toptext: 'Эконом', value: 'E' },
     { text: 'Бизнес', toptext: 'Бизнес', value: 'B' }
   ];
