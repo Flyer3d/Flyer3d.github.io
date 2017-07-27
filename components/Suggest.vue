@@ -96,8 +96,9 @@
 
         };
         this.$emit('input', {code: ''});
-//        this.$refs.control.focus();
+        this.$refs.control.focus();
         this.$refs.control.$refs.input.focus();
+        this.$refs.control.$refs.input.click();
       },
       onFocus(val) {
         this.$refs.control.$refs.input.select();

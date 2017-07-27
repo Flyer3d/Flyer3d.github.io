@@ -1,5 +1,5 @@
 <template>
-  <v-card class="delfin elevation-0">
+  <v-card class="delfin elevation-0 avia-form">
 
     <v-card-text>
       <h4 class="white--text mt-3">Поиск авиабилетов по всем направлениям</h4>
@@ -25,7 +25,7 @@
 
       <div class="text-xs-center">
         <span v-tooltip:top=" { html: 'Заполните обязательные поля!', visible: !(storeDeparture && storeArrival)} ">
-        <v-btn large dark class="delfin" @click.native="search(form)" v-bind:disabled="!(storeDeparture && storeArrival)">
+        <v-btn large dark class="delfin avia-form__submit" @click.native="search(form)" v-bind:disabled="!(storeDeparture && storeArrival)">
           <v-icon dark left>flight</v-icon>
           Найти авиабилеты
         </v-btn>
@@ -115,3 +115,13 @@
     }
   };
 </script>
+
+<style lang="stylus">
+  .avia-form
+
+    & &__submit.theme--dark.btn--disabled:not(.btn--icon):not(.btn--flat)
+      background: #ff9a0d !important;
+      opacity: .7;
+      color: #fff;
+
+</style>
