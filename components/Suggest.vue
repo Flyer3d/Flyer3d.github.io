@@ -4,7 +4,7 @@
       <v-icon>close</v-icon>
     </v-btn>
     <v-menu
-      ref="menu "
+      ref="menu"
       :close-on-click="true"
       offset-y
       full-width
@@ -116,7 +116,7 @@
         this.$refs.control.$refs.input.blur();
 
         this.$emit('done');
-        this.$refs.menu.deactivate();
+        this.$refs.menu && this.$refs.menu.deactivate();
       }
     }
   }
