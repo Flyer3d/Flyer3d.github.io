@@ -78,9 +78,10 @@
         date: this.value,
         options: {
           onChange: this.onDateChange,
+          dateFormat: "d-m-Y",
           defaultDate: this.value,
-          minDate: this.minDate || moment().format('YYYY-MM-DD'),
-          maxDate: this.maxDate || moment().add(360, 'days').format('YYYY-MM-DD'),
+          minDate: this.minDate || moment().format('DD-MM-YYYY'),
+          maxDate: this.maxDate || moment().add(360, 'days').format('DD-MM-YYYY'),
           inline: true
         },
         fp: null

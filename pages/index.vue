@@ -19,7 +19,6 @@
 <script>
 
   import { mapActions, mapGetters } from 'vuex';
-  import moment from 'moment';
   import AviaForm from '~components/AviaForm';
   import Ticket from '~components/Ticket';
 

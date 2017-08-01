@@ -8,8 +8,8 @@ const state = {
       departureName: '',
       arrival: '',
       arrivalName: '',
-      date: moment().add(15, 'days').format('YYYY-MM-DD'),
-      date_return: moment().add(25, 'days').format('YYYY-MM-DD')
+      date: moment().add(15, 'days').format('DD-MM-YYYY'),
+      date_return: moment().add(25, 'days').format('DD-MM-YYYY')
     },
     type: 'simple'
   },

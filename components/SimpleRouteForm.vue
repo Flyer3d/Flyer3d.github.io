@@ -85,11 +85,11 @@
       },
       validate () {
         let valid = true;
-        if(!this.departure){
+        if(!this.departure.code){
           valid = false;
           this.departureError = true;
         }
-        if(!this.arrival){
+        if(!this.arrival.code){
           valid = false;
           this.arrivalError = true;
         }

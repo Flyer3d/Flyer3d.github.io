@@ -51,7 +51,7 @@
     components: { RouteForm, Persons },
     data() {
       return {
-        now: moment().format('YYYY-MM-DD')
+        now: moment().format('DD-MM-YYYY')
       };
     },
     computed: {

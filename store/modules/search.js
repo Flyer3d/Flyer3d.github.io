@@ -43,14 +43,14 @@ const actions = {
       queryParams.destinations.push({
         departure: route.departure,
         arrival: route.arrival,
-        date: moment(route.date).format('DD-MM-YYYY')
+        date: route.date
       });
 
       if (route.date_return) {
         queryParams.destinations.push({
           departure: route.arrival,
           arrival: route.departure,
-          date: moment(route.date_return).format('DD-MM-YYYY')
+          date: route.date_return
         });
       }
     } else if (type === 'complex') {
@@ -58,7 +58,7 @@ const actions = {
         queryParams.destinations.push({
           departure: item.departure,
           arrival: item.arrival,
-          date: moment(item.date).format('DD-MM-YYYY')
+          date: item.date
         });
       });
     }
@@ -73,8 +73,7 @@ const actions = {
 
       commit(LOADED, response.data);
     } catch (e) {
-      console.log('Search error!')
-      console.dir(e)
+      console.log()
       commit(ERROR);
     }
   }
