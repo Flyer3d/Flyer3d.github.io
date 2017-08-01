@@ -53,8 +53,15 @@ const actions = {
           date: moment(route.date_return).format('DD-MM-YYYY')
         });
       }
+    } else if (type === 'complex') {
+      route && route.forEach(function (item) {
+        queryParams.destinations.push({
+          departure: item.departure,
+          arrival: item.arrival,
+          date: moment(item.date).format('DD-MM-YYYY')
+        });
+      });
     }
-
     commit(LOADING);
     try {
       console.log('Searching in [http://api.delfinchik.net/search]. Params:');
@@ -66,6 +73,8 @@ const actions = {
 
       commit(LOADED, response.data);
     } catch (e) {
+      console.log('Search error!')
+      console.dir(e)
       commit(ERROR);
     }
   }

@@ -28,11 +28,13 @@
     ref="control"
     v-model="date"
     readonly
-    class="flat-picker__date white pa-1 pt-2 pl-3 pb-0 elevation-4"
+    class="flat-picker__date pa-1 pt-2 pl-3 pb-0 elevation-4"
+    v-bind:class="{'flat-picker_error': isError, white: !isError}"
     :placeholder="placeholder"
     single-line
     hide-details
     full-width
+    @focus="onFocus(date)"
   >
   </v-text-field>
   </div>
@@ -65,10 +67,12 @@
       maxDate: [String, Date],
       clear: {
         default: false
-      }
+      },
+     isError: Boolean
     },
     data() {
       return {
+        changedInside: false,
         showClearButton: true,
         menu: false,
         date: this.value,
@@ -88,27 +92,51 @@
       }
     },
     watch: {
-      date(val) {
-        this.$emit('input', val);
-        this.$emit('done', val);
-      },
       minDate (val){
         this.fp.config.minDate = this.options.minDate = val;
+        this.changedInside = true;
         this.fp.redraw();
         if(moment(val).isAfter(this.value)){
           this.fp.setDate(val, true);
-        } else {
-          this.fp.setDate(this.value, true);
+        }
+        this.changedInside = true;
+      },
+      menu (val) {
+        if(val){
+          this.$emit('active');
         }
       }
     },
     methods: {
       onDateChange(selectedDate, dateStr, instance){
         this.date = dateStr;
+        this.$emit('input',dateStr);
+        this.$emit('done', dateStr);
+        if(this.changedInside){
+          this.changedInside = false;
+          return;
+        }
         this.menu = false;
       },
       clearDate () {
         this.fp.setDate(null, true);
+      },
+      onBlur(){
+
+        this.menu = false;
+      },
+      onFocus() {
+        if(!this.date){
+          this.changedInside = true;
+          if(this.minDate) {
+            this.fp.setDate(this.minDate, true);
+          } else {
+            this.fp.setDate(moment(), true);
+          }
+        }
+        this.menu = true;
+//        this.$refs.control.$refs.input.focus();
+
       }
     },
 
@@ -121,6 +149,10 @@
 </script>
 
 <style lang="stylus">
+  .flat-picker_error
+    background: #ffcccc
+    border 1px solid #FF4A4A
+
   .flat-picker
     margin: 18px 0
     padding-left: 8px

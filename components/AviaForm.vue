@@ -3,15 +3,13 @@
 
     <v-card-text>
       <h4 class="white--text mt-3">Поиск авиабилетов по всем направлениям</h4>
-      <div>
-        <a
+      <div white v-html="toggleText" @click="toggleForm">
       </div>
         <keep-alive>
           <component ref="form" :is="currentForm">
           </component>
         </keep-alive>
       <div class="text-xs-center">
-        <!--<span v-tooltip:top=" { html: 'Заполните обязательные поля!', visible: !(departureError && arrivalError)} ">-->
         <v-btn large dark class="delfin avia-form__submit" @click.native="submit" :loading="searchLoading" :disabled="searchLoading">
           <v-icon dark left>flight</v-icon>
           Найти авиабилеты
@@ -19,7 +17,6 @@
         <v-icon light>cached</v-icon>
       </span>
         </v-btn>
-        <!--</span>-->
       </div>
     </v-card-text>
   </v-card>
@@ -30,18 +27,23 @@
 
   import { mapActions, mapGetters } from 'vuex';
   import moment from 'moment';
+  import _ from 'lodash';
   import SimpleRouteForm from './SimpleRouteForm';
+  import ComplexRouteForm from './ComplexRouteForm';
 
   export default {
-    components: { SimpleRouteForm },
+    components: { SimpleRouteForm, ComplexRouteForm },
     data() {
       return {
         currentForm: 'SimpleRouteForm',
+        toggleText: 'Составной маршрут'
       }
     },
     computed: {
       ...mapGetters({
-        form: 'form/form',
+        persons: 'Persons/form',
+        simpleForm: 'simpleForm/form',
+        complexForm: 'complexForm/form',
         searchLoading: 'search/loading'
       })
     },
@@ -49,11 +51,18 @@
       validate(){
         return this.$refs.form.validate();
       },
+      toggleForm () {
+        if(this.currentForm === 'SimpleRouteForm') {
+          this.toggleText = 'Простой маршрут';
+          this.currentForm = 'ComplexRouteForm';
+        } else {
+          this.toggleText = 'Составной маршрут';
+          this.currentForm = 'SimpleRouteForm';
+        }
+      },
       submit () {
-        console.log('Refs!')
-        console.dir(this.$refs.form)
         if(this.validate()){
-          this.search(this.form);
+          this.search(_.merge(this.$refs.form.getForm(), this.persons));
         }
       },
       ...mapActions({

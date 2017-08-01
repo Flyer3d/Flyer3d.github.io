@@ -56,7 +56,7 @@
       return {
         showMenu:false,
         val: {
-          airport: null,
+          airport: this.value && this.value.code,
           display: this.value && this.value.title
         },
         selected: null
@@ -64,8 +64,6 @@
     },
     mounted() {
       this.suggest(this.val.display);
-      console.log('Suggest mounted');
-      console.dir(this.$refs.control.$refs.input)
       this.$refs.control.$refs.input.onblur = this.onBlur
     },
     computed: {

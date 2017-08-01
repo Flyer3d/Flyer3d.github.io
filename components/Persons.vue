@@ -150,10 +150,10 @@
     },
     computed: {
       ...mapGetters({
-        storeAdults: 'form/adults',
-        storeKids: 'form/kids',
-        storeInfants: 'form/infants',
-        storeAviaClass: 'form/aviaClass'
+        storeAdults: 'Persons/adults',
+        storeKids: 'Persons/kids',
+        storeInfants: 'Persons/infants',
+        storeAviaClass: 'Persons/aviaClass'
 
       }),
       summary() {
@@ -196,7 +196,7 @@
     },
     methods: {
       ...mapMutations({
-        updateForm: 'form/update'
+        updateForm: 'Persons/update'
       }),
       pluralize(n, v1, v2, v3) {
         let plural;
@@ -238,6 +238,8 @@
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
+    .btn
+      width 100%
     .btn__content:before
       background #000
 

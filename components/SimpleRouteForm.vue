@@ -30,35 +30,35 @@
     components: { FlatPicker, Suggest, Persons },
     data() {
       return {
-        item: '',
-        suggestions: [],
         departureError: false,
         arrivalError: false
       };
     },
     computed: {
       ...mapGetters({
-        storeDeparture: 'form/departure',
-        storeArrival: 'form/arrival',
-        storeDate: 'form/date',
-        storeDateReturn: 'form/date_return',
-        form: 'form/form'
+        storeDeparture: 'simpleForm/departure',
+        storeDepartureName: 'simpleForm/departureName',
+        storeArrival: 'simpleForm/arrival',
+        storeArrivalName: 'simpleForm/arrivalName',
+        storeDate: 'simpleForm/date',
+        storeDateReturn: 'simpleForm/date_return',
+        form: 'simpleForm/form'
 
       }),
       departure : {
         get: function () {
-          return this.storeDeparture;
+          return {code: this.storeDeparture, title: this.storeDepartureName};
         },
         set: function (value) {
-          this.updateForm({route: {departure: value.code}});
+          this.updateForm({route: {departure: value.code, departureName: value.title}});
         }
       },
       arrival : {
         get: function () {
-          return this.storeArrival;
+          return {code: this.storeArrival, title: this.storeArrivalName};
         },
         set: function (value) {
-          this.updateForm({route: {arrival: value.code}});
+          this.updateForm({route: {arrival: value.code, arrivalName: value.title}});
         }
       },
       date : {
@@ -80,7 +80,10 @@
     },
 
     methods: {
-      validate(){
+      getForm () {
+        return this.form;
+      },
+      validate () {
         let valid = true;
         if(!this.departure){
           valid = false;
@@ -96,7 +99,7 @@
         search: 'search/load'
       }),
       ...mapMutations({
-        updateForm: 'form/update'
+        updateForm: 'simpleForm/update'
       }),
       focus(control) {
         this.$refs[control] && this.$refs[control].$refs.control.focus();

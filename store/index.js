@@ -4,7 +4,9 @@ import Vuex from 'vuex';
 
 import airports from './modules/airports';
 import search from './modules/search';
-import form from './modules/form';
+import Persons from './modules/Persons';
+import simpleForm from './modules/simpleForm';
+import complexForm from './modules/complexForm';
 
 
 Vue.use(Vuex);
@@ -16,7 +18,9 @@ const store = function () {
     modules: {
       airports,
       search,
-      form
+      Persons,
+      simpleForm,
+      complexForm
     }
   });
 };
