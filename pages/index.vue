@@ -4,8 +4,8 @@
       <avia-form></avia-form>
       <v-progress-linear v-bind:indeterminate="true" :height="5" warning class="mt-0" v-show="searchLoading"></v-progress-linear>
       <template v-if="searchStatus == 'OK'">
-        <template v-for="item in showNResults(itemsOnPage)">
-          <ticket  v-bind:key="item.id" :item="item"></ticket>
+        <template v-for="(item, index) in showNResults(itemsOnPage)">
+          <ticket  v-bind:key="item.id" :item="item" :session="session" :count="index"></ticket>
           <v-divider></v-divider>
         </template>
         <v-pagination v-bind:length.number="totalPages" v-model="page"></v-pagination>
@@ -34,6 +34,7 @@
       ...mapGetters({
         searchLoading: 'search/loading',
         searchResults: 'search/items',
+        session: 'search/session',
         searchStatus: 'search/status'
       }),
       totalPages () {

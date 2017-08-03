@@ -7,6 +7,8 @@ module.exports = {
   plugins: [
     '~plugins/vuetify.js',
     '~plugins/vue-instant.js',
+    '~plugins/my-utils.js',
+    '~plugins/filters.js'
   ],
   css: [
     { src: join(__dirname, 'css/app.styl'), lang: 'styl' }
