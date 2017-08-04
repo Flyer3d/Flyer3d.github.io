@@ -1,8 +1,0 @@
-export const AIRPORTS_LOADED = 'AIRPORTS_LOADED';
-export const AIRPORTS_LOADING = 'AIRPORTS_LOADING';
-
-export const SEARCH_LOADING = 'SEARCH_LOADING';
-export const SEARCH_LOADED = 'SEARCH_LOADED';
-export const SEARCH_ERROR = 'SEARCH_ERROR';
-
-//export const UPDATE_FORM = 'UPDATE_FORM';
